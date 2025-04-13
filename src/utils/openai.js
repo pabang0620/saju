@@ -35,7 +35,11 @@ async function askToGPT(message) {
     temperature: 0.8,
   });
 
-  return response.data.choices[0].message.content.trim();
+  if (!response?.choices?.length) {
+    throw new Error("OpenAI 응답에 choices가 없습니다.");
+  }
+
+  return response.choices[0].message.content.trim();
 }
 
 module.exports = { askToGPT }; // ✅ 반드시 마지막 줄에!
